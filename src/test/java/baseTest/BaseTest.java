@@ -118,12 +118,11 @@ public class BaseTest {
         try {
             driver.manage().timeouts().pageLoadTimeout(1, TimeUnit.SECONDS);
             driver.findElement(element);
-            waitUtilElementToBeVisible(driver.findElement(element));
             return true;
         } catch (NoSuchElementException e) {
             return false;
         } finally {
-            driver.manage().timeouts().pageLoadTimeout(5, TimeUnit.SECONDS);
+            driver.manage().timeouts().pageLoadTimeout(IMPLICITLY_WAITE, TimeUnit.SECONDS);
         }
     }
 
@@ -135,10 +134,12 @@ public class BaseTest {
      * @author Алехнович Александр
      */
     public void iframeClose(By iframeXpath, By iframeCloseXpath) {
-        boolean iframeFlag = isElementExist(iframeXpath);
-        if (iframeFlag) {
-            WebElement iframe = driver.findElement(iframeXpath);
-            driver.switchTo().frame(iframe).findElement(iframeCloseXpath).click();
+        try {
+            driver.manage().timeouts().pageLoadTimeout(1, TimeUnit.SECONDS);
+            driver.switchTo().frame(driver.findElement(iframeXpath)).findElement(iframeCloseXpath).click();
+        } catch (Exception ignore) {
+        } finally {
+            driver.manage().timeouts().pageLoadTimeout(IMPLICITLY_WAITE, TimeUnit.SECONDS);
             driver.switchTo().parentFrame();
         }
     }

@@ -27,7 +27,7 @@ public class RGSTest extends BaseTest {
         wait.until(ExpectedConditions.attributeContains(companies, "class", "active"));
 
         //Работа с iframe
-        By xpathIframe = (By.xpath("//iframe[contains(@class,'flocktory-widget') and contains(@id,'fl-616371')]"));
+        By xpathIframe = (By.xpath("//iframe[contains(@class,'flocktory-widget')]"));
         By closeWidgetIframe = By.xpath("//div[contains(@class,'widget__close') and contains(@class,'js-collapse-login')]");
         iframeClose(xpathIframe, closeWidgetIframe);
 
@@ -65,7 +65,6 @@ public class RGSTest extends BaseTest {
 
         //Клик по: Checkbox
         WebElement checkboxPersonalData = driver.findElement(By.xpath("//div[@class='form__checkbox']//input"));
-        scrollToElementJs(checkboxPersonalData);
         elementClickJs(checkboxPersonalData);
         wait.until(ExpectedConditions.attributeContains(checkboxPersonalData, "value", "true"));
 
@@ -78,8 +77,8 @@ public class RGSTest extends BaseTest {
         if (iframeCookie) {
             waitUtilElementToBeVisible(driver.findElement(closeWidgetCookie));
             driver.findElement(closeWidgetCookie).click();
-            boolean checkFlag = isElementExist(xpathIframe);
-            Assert.assertFalse("Сообщение о cookie не было закрыто", checkFlag);
+            boolean checkFlag = wait.until(ExpectedConditions.stalenessOf(driver.findElement(closeWidgetCookie)));
+            Assert.assertTrue("Сообщение о cookie не было закрыто", checkFlag);
         }
 
         //Нажатие по кнопке: Свяжитесь со мной
