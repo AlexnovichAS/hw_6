@@ -7,10 +7,12 @@ import org.hamcrest.MatcherAssert;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.openqa.selenium.*;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
-import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.CoreMatchers.containsString;
+import static org.hamcrest.CoreMatchers.equalTo;
 
 @RunWith(JUnitParamsRunner.class)
 public class RGSTest extends BaseTest {
@@ -29,7 +31,9 @@ public class RGSTest extends BaseTest {
         //Работа с iframe
         By xpathIframe = (By.xpath("//iframe[contains(@class,'flocktory-widget')]"));
         By closeWidgetIframe = By.xpath("//div[contains(@class,'widget__close') and contains(@class,'js-collapse-login')]");
-        iframeClose(xpathIframe, closeWidgetIframe);
+        if (isElementExist(xpathIframe)) {
+            iframeClose(xpathIframe, closeWidgetIframe);
+        }
 
         //Выбор пункта подменю: Здоровье
         WebElement healthButton = driver.findElement(By.xpath("//span[contains(text(),'" + underDirectory + "') and contains(@class,'padding')]"));
@@ -69,7 +73,9 @@ public class RGSTest extends BaseTest {
         wait.until(ExpectedConditions.attributeContains(checkboxPersonalData, "value", "true"));
 
         //Работа с iframe
-        iframeClose(xpathIframe, closeWidgetIframe);
+        if (isElementExist(xpathIframe)) {
+            iframeClose(xpathIframe, closeWidgetIframe);
+        }
 
         //Поиск сообщения: Cookie
         By closeWidgetCookie = By.xpath("//button[contains(@class,'btn--text') and contains(text(),'Хорошо')]");
