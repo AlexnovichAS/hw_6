@@ -71,7 +71,7 @@ public class BaseTest {
      * @author Алехнович Александр
      */
     @After
-    public void closeBellTest() {
+    public void closeDriver() {
         driver.quit();
     }
 
