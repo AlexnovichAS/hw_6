@@ -116,13 +116,13 @@ public class BaseTest {
      */
     public boolean isElementExist(By element) {
         try {
-            driver.manage().timeouts().pageLoadTimeout(1, TimeUnit.SECONDS);
+            driver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
             driver.findElement(element);
             return true;
         } catch (NoSuchElementException e) {
             return false;
         } finally {
-            driver.manage().timeouts().pageLoadTimeout(IMPLICITLY_WAITE, TimeUnit.SECONDS);
+            driver.manage().timeouts().implicitlyWait(IMPLICITLY_WAITE, TimeUnit.SECONDS);
         }
     }
 
@@ -135,11 +135,11 @@ public class BaseTest {
      */
     public void iframeClose(By iframeXpath, By iframeCloseXpath) {
         try {
-            driver.manage().timeouts().pageLoadTimeout(1, TimeUnit.SECONDS);
+            driver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
             driver.switchTo().frame(driver.findElement(iframeXpath)).findElement(iframeCloseXpath).click();
         } catch (Exception ignore) {
         } finally {
-            driver.manage().timeouts().pageLoadTimeout(IMPLICITLY_WAITE, TimeUnit.SECONDS);
+            driver.manage().timeouts().implicitlyWait(IMPLICITLY_WAITE, TimeUnit.SECONDS);
             driver.switchTo().parentFrame();
         }
     }
